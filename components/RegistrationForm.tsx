@@ -1,3 +1,4 @@
+import Link from "next/link";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,7 +21,7 @@ import {
 
 export function RegistrationForm() {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-full">
       <CardHeader className="text-center">
         <CardTitle>Register New Account</CardTitle>
         <CardDescription>Welcome</CardDescription>
@@ -47,8 +48,12 @@ export function RegistrationForm() {
           </div>
         </form>
       </CardContent>
-      <CardFooter>
-        <Button className="w-full">SignUP</Button>
+      <CardFooter className="flex-col divide-y-2 space-y-5 divide-blue-100">
+        <Button className="w-full">Submit</Button>
+
+        <div>
+          <Link href="/login">Already have an account?</Link>
+        </div>
       </CardFooter>
     </Card>
   );

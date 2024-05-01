@@ -1,6 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Inter as FontSans } from "next/font/google";
+import Footer from "@/components/Footer";
+import { ModeToggle } from "@/components/ModeToggle";
+import NextTopLoaderUI from "@/components/NextTopLoaderUI";
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -26,7 +30,16 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextTopLoaderUI />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );
