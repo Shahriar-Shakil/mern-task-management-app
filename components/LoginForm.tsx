@@ -1,6 +1,6 @@
+"use client";
 import Link from "next/link";
-import * as React from "react";
-import { Button } from "@/components/ui/button";
+import { loginAction } from "@/app/actions/auth";
 import {
   Card,
   CardContent,
@@ -11,13 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import FormSubmitButton from "./FormSubmitButton";
 
 export function LoginForm() {
   return (
@@ -27,26 +21,26 @@ export function LoginForm() {
         <CardDescription>To Explore your Tasks</CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
+        <form action={loginAction} autoComplete="off">
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" placeholder="Enter Your Email" />
+              <Input id="email" name="email" placeholder="Enter Your Email" />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
+                name="password"
                 placeholder="Enter Your Password"
               />
             </div>
           </div>
+          <FormSubmitButton>Login</FormSubmitButton>
         </form>
       </CardContent>
       <CardFooter className="flex-col divide-y-2 space-y-5 divide-blue-100">
-        <Button className="w-full">Login</Button>
-
         <div>
           <Link href="/registration">Create an account</Link>
         </div>
