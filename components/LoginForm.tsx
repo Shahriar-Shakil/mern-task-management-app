@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { loginAction } from "@/app/actions/auth";
+import { loginAction } from "@/actions/auth";
 import {
   Card,
   CardContent,

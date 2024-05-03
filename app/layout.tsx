@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Inter as FontSans } from "next/font/google";
 import Footer from "@/components/Footer";
-import { ModeToggle } from "@/components/ModeToggle";
-import NextTopLoaderUI from "@/components/NextTopLoaderUI";
+import NextTopLoaderUI from "@/components/providers/NextTopLoaderUI";
+import ToastProvider from "@/components/providers/ToastProvider";
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({

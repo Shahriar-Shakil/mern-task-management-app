@@ -8,11 +8,16 @@ type Props = {
 
 export default function FormSubmitButton({ children }: Props) {
   const { pending } = useFormStatus();
-  console.log(pending);
   return (
     <Button type="submit" className="w-full mt-5" disabled={pending}>
-      {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <></>}
-      {children}
+      {pending ? (
+        <>
+          {" "}
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+        </>
+      ) : (
+        <>{children}</>
+      )}
     </Button>
   );
 }
