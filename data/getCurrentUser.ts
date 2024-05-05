@@ -1,3 +1,5 @@
+"user server";
+import { redirect } from "next/navigation";
 import { GET_USER_API } from "@/lib/API";
 
 export async function getCurrentUser(accessToken: string | undefined) {
@@ -7,7 +9,8 @@ export async function getCurrentUser(accessToken: string | undefined) {
       authorization: `Bearer ${accessToken}`,
     },
   });
-  const data = response.json();
+
+  const data = await response.json();
 
   return data;
 }

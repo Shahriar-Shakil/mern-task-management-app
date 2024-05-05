@@ -8,6 +8,16 @@ import { FormState, SignupFormSchema } from "@/lib/definitions";
 export async function loginAction(formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
+  await createSession({ email, password });
+}
+
+export async function createSession({
+  email,
+  password,
+}: {
+  email: any;
+  password: any;
+}) {
   const response = await fetch(LOGIN_API, {
     method: "POST",
     headers: {
@@ -23,6 +33,7 @@ export async function loginAction(formData: FormData) {
   cookies().set("session", responseData.accessToken);
   redirect("/");
 }
+
 export async function signUpAction(sate: FormState, formData: any) {
   //1. Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
@@ -56,5 +67,7 @@ export async function signUpAction(sate: FormState, formData: any) {
         "An error occurred while creating your account.",
     };
   }
-  console.log(responseData);
+  if (responseData?.email) {
+    await createSession({ email: responseData?.email, password });
+  }
 }

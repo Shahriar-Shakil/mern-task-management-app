@@ -5,6 +5,7 @@ import { Inter as FontSans } from "next/font/google";
 import Footer from "@/components/Footer";
 import NextTopLoaderUI from "@/components/providers/NextTopLoaderUI";
 import ToastProvider from "@/components/providers/ToastProvider";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
@@ -38,6 +39,8 @@ export default function RootLayout({
         >
           <NextTopLoaderUI />
           {children}
+          <Toaster />
+
           <Footer />
         </ThemeProvider>
       </body>

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 import { signUpAction } from "@/actions/auth";
 import {
@@ -13,9 +14,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import FormSubmitButton from "./FormSubmitButton";
+import { useToast } from "./ui/use-toast";
 
 export function RegistrationForm() {
   const [state, action] = useFormState(signUpAction, undefined);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (state?.status === "error") {
+      console.log(state.status);
+      toast({
+        variant: "destructive",
+        title: state?.message,
+      });
+    }
+  }, [state, toast]);
   return (
     <>
       <Card className="w-full">

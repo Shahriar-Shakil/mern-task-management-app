@@ -24,6 +24,9 @@ const config = {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       colors: {
+        "input-dark": "#25273C",
+        "bg-light": "#fafafa",
+        "bg-dark": "#181824",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -77,6 +80,12 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+    },
+  },
+  variants: {
+    extend: {
+      opacity: ["dark"],
+      fontWeight: ["hover"],
     },
   },
   plugins: [require("tailwindcss-animate")],
