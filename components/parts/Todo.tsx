@@ -1,5 +1,7 @@
-import React from "react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import InformationFilter from "../InformationFilter";
 import InputArea from "../InputArea";
+import ListOfActivity from "../ListOfActivity";
 import { ModeToggle } from "../ModeToggle";
 
 type Props = {};
@@ -14,6 +16,14 @@ export default function Todo({}: Props) {
         </div>
         {/* Input */}
         <InputArea />
+        <Card className="w-full">
+          <CardContent className="p-0">
+            <ListOfActivity />
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <InformationFilter />
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );

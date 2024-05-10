@@ -1,8 +1,23 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { useFormState } from "react-dom";
+import { createTaskAction } from "@/actions/task";
+import { toast } from "./ui/use-toast";
 
 type Props = {};
 
 export default function InputArea({}: Props) {
+  const [state, action] = useFormState(createTaskAction, undefined);
+  console.log(state);
+  useEffect(() => {
+    if (state?.errors) {
+      toast({
+        variant: "destructive",
+        title: state?.errors.title?.[0],
+      });
+    }
+  }, [state, toast]);
   return (
     <div
       id="#input"
@@ -12,10 +27,11 @@ export default function InputArea({}: Props) {
         <img src="/images/circle.svg" alt="LogoCentang" className="mt-5 mr-6" />
       </div>
 
-      <form className="flex-1">
+      <form action={action} key={state?.resetKey} className="flex-1">
         <input
           className="w-full h-16 border-none input dark:bg-input-dark dark:text-gray-300"
-          id="username"
+          id="title"
+          name="title"
           type="text"
           placeholder="What to do ?"
         />

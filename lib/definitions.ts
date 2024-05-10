@@ -11,7 +11,6 @@ export const SignupFormSchema = z.object({
     .min(6, { message: "Be at least 6 characters long" })
     .trim(),
 });
-
 export type FormState =
   | {
       errors?: {
@@ -22,3 +21,28 @@ export type FormState =
       message?: string;
     }
   | undefined;
+
+export const LoginFormSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email." }).trim(),
+  password: z
+    .string()
+    .min(6, { message: "Be at least 6 characters long" })
+    .trim(),
+});
+
+// task schema
+export const taskSchema = z.object({
+  title: z
+    .string()
+    .min(5, { message: "Title must be at least 5 characters long." })
+    .trim(),
+});
+export type TaskFormState =
+  | {
+      errors?: {
+        title?: string[];
+      };
+      message?: string;
+    }
+  | undefined
+  | any;

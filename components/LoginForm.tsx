@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useFormState } from "react-dom";
 import { loginAction } from "@/actions/auth";
 import {
   Card,
@@ -12,8 +14,21 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import FormSubmitButton from "./FormSubmitButton";
+import { useToast } from "./ui/use-toast";
 
 export function LoginForm() {
+  const [state, action] = useFormState(loginAction, undefined);
+  console.log(state);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (state?.errors) {
+      toast({
+        variant: "destructive",
+        title: "errors",
+      });
+    }
+  }, [state, toast]);
   return (
     <Card className="w-full">
       <CardHeader className="text-center">
@@ -21,7 +36,7 @@ export function LoginForm() {
         <CardDescription>To Explore your Tasks</CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={loginAction} autoComplete="off">
+        <form action={action} autoComplete="off">
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>

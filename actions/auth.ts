@@ -3,12 +3,23 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { LOGIN_API, REGISTRATION_API } from "@/lib/API";
-import { FormState, SignupFormSchema } from "@/lib/definitions";
+import {
+  FormState,
+  LoginFormSchema,
+  SignupFormSchema,
+} from "@/lib/definitions";
 
-export async function loginAction(formData: FormData) {
+export async function loginAction(sate: any, formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
-  await createSession({ email, password });
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+  if (!validatedFields.success) {
+    console.log("error");
+  }
+  return await createSession({ email, password });
 }
 
 export async function createSession({
@@ -28,7 +39,9 @@ export async function createSession({
   const responseData = await response.json();
 
   if (!response.ok) {
-    throw new Error(responseData.message || "Network response was not ok");
+    return {
+      errors: responseData.message,
+    };
   }
   cookies().set("session", responseData.accessToken);
   redirect("/");
