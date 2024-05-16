@@ -1,4 +1,5 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { getTasks } from "@/data/getTask";
 import InformationFilter from "../InformationFilter";
 import InputArea from "../InputArea";
 import ListOfActivity from "../ListOfActivity";
@@ -6,7 +7,8 @@ import { ModeToggle } from "../ModeToggle";
 
 type Props = {};
 
-export default function Todo({}: Props) {
+export default async function Todo({}: Props) {
+  const tasks = await getTasks();
   return (
     <div className="relative z-10 flex h-auto max-w-xl px-10 mx-auto bg-yellow-3000 md:mx-auto">
       <div className="w-full mt-20 text-left ">
@@ -18,10 +20,10 @@ export default function Todo({}: Props) {
         <InputArea />
         <Card className="w-full">
           <CardContent className="p-0">
-            <ListOfActivity />
+            <ListOfActivity tasks={tasks} />
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <InformationFilter />
+          <CardFooter className="flex justify-between items-center py-3">
+            <InformationFilter tasks={tasks} />
           </CardFooter>
         </Card>
       </div>
