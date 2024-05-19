@@ -1,4 +1,5 @@
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { getCompleted } from "@/context";
 import { getTasks } from "@/data/getTask";
 import InformationFilter from "../InformationFilter";
 import InputArea from "../InputArea";
@@ -8,7 +9,8 @@ import { ModeToggle } from "../ModeToggle";
 type Props = {};
 
 export default async function Todo({}: Props) {
-  const tasks = await getTasks();
+  const filter = getCompleted();
+  const tasks = await getTasks(filter);
   return (
     <div className="relative z-10 flex h-auto max-w-xl px-10 mx-auto bg-yellow-3000 md:mx-auto">
       <div className="w-full mt-20 text-left ">

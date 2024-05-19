@@ -1,7 +1,9 @@
-import Image from "next/image";
 import Todo from "@/components/parts/Todo";
+import { setCompleted } from "@/context";
 
-export default function Home() {
+export default function Home(props: any) {
+  const { completed } = props.searchParams;
+  setCompleted(completed);
   return (
     <div className="relative w-full min-h-screen bg-top bg-no-repeat bg-contain bg-bg-light dark:bg-bg-dark">
       <img

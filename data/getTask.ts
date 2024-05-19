@@ -1,10 +1,16 @@
 import { cookies } from "next/headers";
 import { API_TASK } from "@/lib/API";
+import { objectToQueryString } from "@/lib/utils";
 
-export async function getTasks() {
+export async function getTasks(filter: string) {
   const cookieStore = cookies();
   const accessToken = cookieStore.get("session")?.value;
-  const res = await fetch(API_TASK, {
+  let query: { completed?: any } = {};
+  if (filter) {
+    query.completed = filter;
+  }
+  let url = `${API_TASK}?${objectToQueryString(query)}`;
+  const res = await fetch(url, {
     method: "GET",
     headers: {
       authorization: `Bearer ${accessToken}`,

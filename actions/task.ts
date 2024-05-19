@@ -1,6 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { API_TASK } from "@/lib/API";
 import { TaskFormState, taskSchema } from "@/lib/definitions";
 
@@ -64,4 +65,16 @@ export async function updateTaskAction(obj: { id: string; data: {} }) {
   const responseData = await response.json();
   revalidateTag("task");
   return responseData;
+}
+
+export async function filterTaskAction(item: string) {
+  if (item === "active") {
+    redirect("/?completed=false");
+  }
+  if (item === "complete") {
+    redirect("/?completed=true");
+  }
+  if (item === "all") {
+    redirect("/?completed=all");
+  }
 }

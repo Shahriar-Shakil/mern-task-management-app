@@ -9,7 +9,6 @@ type Props = {};
 
 export default function InputArea({}: Props) {
   const [state, action] = useFormState(createTaskAction, undefined);
-  console.log(state);
   useEffect(() => {
     if (state?.errors) {
       toast({
