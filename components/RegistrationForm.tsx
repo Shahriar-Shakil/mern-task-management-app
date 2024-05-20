@@ -22,7 +22,6 @@ export function RegistrationForm() {
 
   useEffect(() => {
     if (state?.status === "error") {
-      console.log(state.status);
       toast({
         variant: "destructive",
         title: state?.message,

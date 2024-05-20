@@ -9,7 +9,7 @@ export async function getTasks(filter: string) {
   if (filter) {
     query.completed = filter;
   }
-  let url = `${API_TASK}?${objectToQueryString(query)}`;
+  let url = `${API_TASK}?${objectToQueryString(query)}&sortOrder=desc`;
   const res = await fetch(url, {
     method: "GET",
     headers: {

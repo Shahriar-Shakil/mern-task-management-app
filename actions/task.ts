@@ -38,13 +38,14 @@ export async function createTaskAction(
   };
 }
 
-export async function deleteTaskAction(id: string) {
-  const response = await fetch(`${API_TASK}/${id}`, {
+export async function deleteTaskAction(ids: string[]) {
+  const response = await fetch(`${API_TASK}/delete`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json", // Assuming you're sending JSON data
       authorization: `Bearer ${accessToken}`,
     },
+    body: JSON.stringify(ids),
   });
   const responseData = await response.json();
   revalidateTag("task");

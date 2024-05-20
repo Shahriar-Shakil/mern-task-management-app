@@ -18,7 +18,6 @@ import { useToast } from "./ui/use-toast";
 
 export function LoginForm() {
   const [state, action] = useFormState(loginAction, undefined);
-  console.log(state);
   const { toast } = useToast();
 
   useEffect(() => {

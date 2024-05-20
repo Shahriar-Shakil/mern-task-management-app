@@ -12,7 +12,8 @@ type Props = {
 
 export default function ListOfActivity({ tasks }: Props) {
   const handleDelete = async (id: string) => {
-    await deleteTaskAction(id);
+    let idToBeDeleted = new Array(id);
+    await deleteTaskAction(idToBeDeleted);
   };
   const handleUpdateTask = async (task: any) => {
     await updateTaskAction({
