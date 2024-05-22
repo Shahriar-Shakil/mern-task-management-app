@@ -8,6 +8,7 @@ import NextAuthProvider from "@/components/providers/NextAuthProvider";
 import NextTopLoaderUI from "@/components/providers/NextTopLoaderUI";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,8 +25,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
-
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
     <html suppressHydrationWarning={true} lang="en">
       <body

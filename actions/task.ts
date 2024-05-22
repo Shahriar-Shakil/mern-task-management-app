@@ -1,13 +1,12 @@
 "use server";
+import { getServerSession } from "next-auth";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { API_TASK } from "@/lib/API";
 import { TaskFormState, taskSchema } from "@/lib/definitions";
 
-const cookieStore = cookies();
-
-const accessToken = cookieStore.get("session")?.value;
 export async function createTaskAction(
   state: TaskFormState,
   formData: FormData
@@ -21,6 +20,8 @@ export async function createTaskAction(
     };
   }
   const { title } = validatedFields.data;
+  const session = await getServerSession(authOptions);
+  const accessToken = session?.user?.accessToken;
   const response = await fetch(API_TASK, {
     method: "POST",
     headers: {
@@ -39,6 +40,8 @@ export async function createTaskAction(
 }
 
 export async function deleteTaskAction(ids: string[]) {
+  const session = await getServerSession(authOptions);
+  const accessToken = session?.user?.accessToken;
   const response = await fetch(`${API_TASK}/delete`, {
     method: "DELETE",
     headers: {
@@ -53,6 +56,8 @@ export async function deleteTaskAction(ids: string[]) {
 }
 
 export async function updateTaskAction(obj: { id: string; data: {} }) {
+  const session = await getServerSession(authOptions);
+  const accessToken = session?.user?.accessToken;
   const raw = JSON.stringify(obj.data);
   const response = await fetch(`${API_TASK}/${obj.id}`, {
     method: "put",

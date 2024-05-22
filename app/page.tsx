@@ -1,9 +1,5 @@
-import { getServerSession } from "next-auth";
-import { getToken } from "next-auth/jwt";
 import Todo from "@/components/parts/Todo";
-import Test from "@/components/test";
 import { setCompleted } from "@/context";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 
 // import { authOptions } from "@/server/auth";
 
@@ -41,8 +37,7 @@ export default async function Home(props: any) {
         className="absolute z-0 object-cover w-full opacity-0 dark:opacity-100 sm:hidden"
         style={{ height: "200px" }}
       />
-      <Test />
-      {/* <Todo /> */}
+      <Todo />
     </div>
   );
 }

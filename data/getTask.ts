@@ -1,10 +1,12 @@
+import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { API_TASK } from "@/lib/API";
 import { objectToQueryString } from "@/lib/utils";
 
 export async function getTasks(filter: string) {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("session")?.value;
+  const session = await getServerSession(authOptions);
+  const accessToken = session?.user?.accessToken;
   let query: { completed?: any } = {};
   if (filter) {
     query.completed = filter;
