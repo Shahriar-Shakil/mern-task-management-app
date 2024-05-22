@@ -1,13 +1,15 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { redirect } from "next/navigation";
 import { getAccessToken } from "@/actions/auth";
 import { getCurrentUser } from "@/data/getCurrentUser";
 
+const expireIn = Number(process.env.COOKIE_EXPIRATION_DAYS) || 24;
 export const authOptions: NextAuthOptions = {
   debug: true,
   session: {
     strategy: "jwt",
-    maxAge: 4 * 60 * 60, // 4 hours
+    maxAge: expireIn * 60 * 60, // 23 hours
   },
   pages: {
     signIn: "/login",
@@ -55,6 +57,7 @@ export const authOptions: NextAuthOptions = {
         // Note that this if condition is needed
         session.user = token.user;
       }
+
       return session;
     },
   },

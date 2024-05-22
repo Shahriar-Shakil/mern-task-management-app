@@ -1,4 +1,5 @@
 import Todo from "@/components/parts/Todo";
+import Test from "@/components/Test";
 import { setCompleted } from "@/context";
 
 // import { authOptions } from "@/server/auth";
@@ -38,6 +39,7 @@ export default async function Home(props: any) {
         style={{ height: "200px" }}
       />
       <Todo />
+      <Test />
     </div>
   );
 }

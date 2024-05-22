@@ -30,7 +30,6 @@ export function LoginForm() {
       ...values,
       redirect: false,
     });
-    console.log("await", res);
 
     router.push("/");
   };
