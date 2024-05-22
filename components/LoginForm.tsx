@@ -1,8 +1,9 @@
 "use client";
+
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
-import { loginAction } from "@/actions/auth";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import {
   Card,
   CardContent,
@@ -17,17 +18,22 @@ import FormSubmitButton from "./FormSubmitButton";
 import { useToast } from "./ui/use-toast";
 
 export function LoginForm() {
-  const [state, action] = useFormState(loginAction, undefined);
+  const router = useRouter();
   const { toast } = useToast();
+  const session = useSession();
+  console.log(session, "invoked from login from");
+  const { register: registerEmail, handleSubmit: handleSubmitEmail } =
+    useForm();
 
-  useEffect(() => {
-    if (state?.errors) {
-      toast({
-        variant: "destructive",
-        title: "errors",
-      });
-    }
-  }, [state, toast]);
+  const handleEmailLogin = async (values: any) => {
+    const res = await signIn("email", {
+      ...values,
+      redirect: false,
+    });
+    console.log("await", res);
+
+    // router.push("/");
+  };
   return (
     <Card className="w-full">
       <CardHeader className="text-center">
@@ -35,19 +41,23 @@ export function LoginForm() {
         <CardDescription>To Explore your Tasks</CardDescription>
       </CardHeader>
       <CardContent>
-        <form action={action} autoComplete="off">
+        <form onSubmit={handleSubmitEmail(handleEmailLogin)} autoComplete="off">
           <div className="grid w-full items-center gap-4">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" placeholder="Enter Your Email" />
+              <Input
+                id="email"
+                placeholder="Enter Your Email"
+                {...registerEmail("email")}
+              />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
                 type="password"
-                name="password"
                 placeholder="Enter Your Password"
+                {...registerEmail("password")}
               />
             </div>
           </div>

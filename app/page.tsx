@@ -1,7 +1,16 @@
+import { getServerSession } from "next-auth";
+import { getToken } from "next-auth/jwt";
 import Todo from "@/components/parts/Todo";
 import { setCompleted } from "@/context";
 
-export default function Home(props: any) {
+// import { authOptions } from "@/server/auth";
+
+export default async function Home(props: any) {
+  const token = await getToken();
+
+  const session = await getServerSession();
+  console.log(session, "seesion from homepage");
+  console.log(token, "seesion from homepage");
   const { completed } = props.searchParams;
   setCompleted(completed);
   return (
@@ -36,7 +45,7 @@ export default function Home(props: any) {
         style={{ height: "200px" }}
       />
 
-      <Todo />
+      {/* <Todo /> */}
     </div>
   );
 }

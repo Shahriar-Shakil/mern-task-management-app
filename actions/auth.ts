@@ -19,10 +19,10 @@ export async function loginAction(sate: any, formData: FormData) {
   if (!validatedFields.success) {
     console.log("error");
   }
-  return await createSession({ email, password });
+  return await getAccessToken({ email, password });
 }
 
-export async function createSession({
+export async function getAccessToken({
   email,
   password,
 }: {
@@ -38,13 +38,7 @@ export async function createSession({
   });
   const responseData = await response.json();
 
-  if (!response.ok) {
-    return {
-      errors: responseData.message,
-    };
-  }
-  cookies().set("session", responseData.accessToken);
-  redirect("/");
+  return responseData;
 }
 
 export async function signUpAction(sate: FormState, formData: any) {
@@ -81,6 +75,6 @@ export async function signUpAction(sate: FormState, formData: any) {
     };
   }
   if (responseData?.email) {
-    await createSession({ email: responseData?.email, password });
+    await getAccessToken({ email: responseData?.email, password });
   }
 }
