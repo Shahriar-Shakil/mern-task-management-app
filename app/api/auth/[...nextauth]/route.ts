@@ -35,29 +35,30 @@ export const authOptions: NextAuthOptions = {
         }
         const user = await getCurrentUser(session.accessToken);
 
-        if (user?.username) {
+        if (user?.id) {
           return { ...user, accessToken: session.accessToken };
         } else return null;
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, account, user }) {
-      if (account) {
-        token.accessToken = user?.accessToken;
+    //  =====> Add Below Callbacks <=====
+    jwt: async ({ token, user }) => {
+      if (user) {
+        // Note that this if condition is needed
+        token.user = { ...user };
       }
-      //   console.log("user user", account);
-      //   console.log("user profile", profile);
       return token;
     },
-    async session({ session, token, user }) {
-      //   console.log("session", session);
-      //   console.log("token", token);
-      //   console.log("user", user);
-
+    session: async ({ session, token }) => {
+      if (token?.user) {
+        // Note that this if condition is needed
+        session.user = token.user;
+      }
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export const handler = NextAuth(authOptions);

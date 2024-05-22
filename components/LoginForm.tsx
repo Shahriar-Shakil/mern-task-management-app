@@ -21,7 +21,7 @@ export function LoginForm() {
   const router = useRouter();
   const { toast } = useToast();
   const session = useSession();
-  console.log(session, "invoked from login from");
+
   const { register: registerEmail, handleSubmit: handleSubmitEmail } =
     useForm();
 
@@ -32,7 +32,7 @@ export function LoginForm() {
     });
     console.log("await", res);
 
-    // router.push("/");
+    router.push("/");
   };
   return (
     <Card className="w-full">
