@@ -7,8 +7,8 @@ import Footer from "@/components/Footer";
 import NextAuthProvider from "@/components/providers/NextAuthProvider";
 import NextTopLoaderUI from "@/components/providers/NextTopLoaderUI";
 import { Toaster } from "@/components/ui/toaster";
+import { authOptions } from "@/lib/auth";
 import { cn } from "@/lib/utils";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const fontSans = FontSans({
   subsets: ["latin"],

@@ -6,5 +6,6 @@ type Props = {};
 
 export default function Test({}: Props) {
   const session = useSession();
+  console.log(session);
   return <div></div>;
 }

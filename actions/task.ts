@@ -1,10 +1,9 @@
 "use server";
 import { getServerSession } from "next-auth";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { API_TASK } from "@/lib/API";
+import { authOptions } from "@/lib/auth";
 import { TaskFormState, taskSchema } from "@/lib/definitions";
 
 export async function createTaskAction(

@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { API_TASK } from "@/lib/API";
+import { authOptions } from "@/lib/auth";
 import { objectToQueryString } from "@/lib/utils";
 
 export async function getTasks(filter: string) {
