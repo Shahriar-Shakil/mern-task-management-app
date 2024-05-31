@@ -25,7 +25,7 @@ export default function ListOfActivity() {
   };
   return (
     <div className="">
-      {optimisticTodos.map((task: any, i) => (
+      {optimisticTodos.map((task: any) => (
         <div key={task._id} className="border-b ">
           <div className="sm:px-4 py-2 flex w-full  px-6 text-lg leading-tight text-gray-700 items-center bg-white dark:bg-input-dark   appearance-none  dark:text-gray-300 ">
             <Button

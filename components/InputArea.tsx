@@ -33,7 +33,7 @@ export default function InputArea({}: Props) {
     if (errors?.title) {
       toast({
         variant: "destructive",
-        title: errors.title.message,
+        title: errors?.title?.message?.toString(),
       });
     }
   }, [errors, toast]);
