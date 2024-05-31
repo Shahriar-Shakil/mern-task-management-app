@@ -26,13 +26,20 @@ export function RegistrationForm() {
   } = useForm<any>();
 
   const onSubmit = async (data: any) => {
-    const result = await signUpAction(data);
+    const result = await signUpAction({ ...data, username: data.name });
+    console.log(result);
     if (result._id) {
       signIn("email", {
         email: data.email,
         password: data.password,
         redirect: true,
         callbackUrl: "/",
+      });
+    }
+    if (result.status === "error") {
+      toast({
+        variant: "destructive",
+        title: result?.message?.toString(),
       });
     }
   };
@@ -47,8 +54,8 @@ export function RegistrationForm() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" {...register("username", { value: "" })} />
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" {...register("name", { value: "" })} />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">Email</Label>
