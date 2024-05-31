@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -15,23 +15,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import FormSubmitButton from "./FormSubmitButton";
-import { useToast } from "./ui/use-toast";
 
 export function LoginForm() {
   const router = useRouter();
-  const { toast } = useToast();
-  const session = useSession();
 
-  const { register: registerEmail, handleSubmit: handleSubmitEmail } =
-    useForm();
+  const {
+    register: registerEmail,
+    handleSubmit: handleSubmitEmail,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   const handleEmailLogin = async (values: any) => {
-    const res = await signIn("email", {
-      ...values,
-      redirect: false,
-    });
-
-    router.push("/");
+    try {
+      const res = await signIn("email", {
+        ...values,
+        redirect: false,
+      });
+      if (!res?.error) {
+        router.replace("/");
+      }
+    } catch (error) {
+      console.log("error on signIn", error);
+    } finally {
+    }
   };
   return (
     <Card className="w-full">
@@ -60,7 +66,7 @@ export function LoginForm() {
               />
             </div>
           </div>
-          <FormSubmitButton>Login</FormSubmitButton>
+          <FormSubmitButton loading={isSubmitting}>Login</FormSubmitButton>
         </form>
       </CardContent>
       <CardFooter className="flex-col divide-y-2 space-y-5 divide-blue-100">

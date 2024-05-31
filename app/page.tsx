@@ -1,12 +1,15 @@
 import Todo from "@/components/parts/Todo";
-import Test from "@/components/Test";
-import { setCompleted } from "@/context";
+import { getCompleted, setCompleted } from "@/context";
+import TodoContextProvider from "@/context/TodoContext";
+import { getTasks } from "@/data/getTask";
 
 // import { authOptions } from "@/server/auth";
 
 export default async function Home(props: any) {
   const { completed } = props.searchParams;
   setCompleted(completed);
+  const filter = getCompleted();
+  const tasks = await getTasks(filter);
   return (
     <div className="relative w-full min-h-screen bg-top bg-no-repeat bg-contain bg-bg-light dark:bg-bg-dark">
       <img
@@ -38,8 +41,9 @@ export default async function Home(props: any) {
         className="absolute z-0 object-cover w-full opacity-0 dark:opacity-100 sm:hidden"
         style={{ height: "200px" }}
       />
-      <Todo />
-      {/* <Test /> */}
+      <TodoContextProvider todos={tasks}>
+        <Todo />
+      </TodoContextProvider>
     </div>
   );
 }

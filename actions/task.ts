@@ -6,19 +6,7 @@ import { API_TASK } from "@/lib/API";
 import { authOptions } from "@/lib/auth";
 import { TaskFormState, taskSchema } from "@/lib/definitions";
 
-export async function createTaskAction(
-  state: TaskFormState,
-  formData: FormData
-) {
-  const validatedFields = taskSchema.safeParse({
-    title: formData.get("title"),
-  });
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
-  const { title } = validatedFields.data;
+export async function createTaskAction(title: string) {
   const session = await getServerSession(authOptions);
   const accessToken = session?.user?.accessToken;
   const response = await fetch(API_TASK, {

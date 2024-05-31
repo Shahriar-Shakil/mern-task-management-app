@@ -1,33 +1,35 @@
 "use client";
+import { startTransition } from "react";
 import { deleteTaskAction, updateTaskAction } from "@/actions/task";
 import { Button } from "@/components/ui/button";
+import { useTodoContext } from "@/context/TodoContext";
 import { cn } from "@/lib/utils";
 
-const tags = Array.from({ length: 3 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-);
-type Props = {
-  tasks: any;
-};
-
-export default function ListOfActivity({ tasks }: Props) {
-  const handleDelete = async (id: string) => {
-    let idToBeDeleted = new Array(id);
+export default function ListOfActivity() {
+  const { optimisticTodos, setOptimisticTodo } = useTodoContext();
+  const handleDelete = async (todo: any) => {
+    let idToBeDeleted = new Array(todo._id);
+    setOptimisticTodo({ action: "delete", todo });
     await deleteTaskAction(idToBeDeleted);
   };
-  const handleUpdateTask = async (task: any) => {
+  const handleUpdateTask = async (todo: any) => {
+    setOptimisticTodo({
+      action: "update",
+      todo: { ...todo, completed: !todo.completed },
+    });
+
     await updateTaskAction({
-      id: task._id,
-      data: { completed: !task.completed },
+      id: todo._id,
+      data: { completed: !todo.completed },
     });
   };
   return (
     <div className="">
-      {tasks.map((task: any) => (
+      {optimisticTodos.map((task: any, i) => (
         <div key={task._id} className="border-b ">
           <div className="sm:px-4 py-2 flex w-full  px-6 text-lg leading-tight text-gray-700 items-center bg-white dark:bg-input-dark   appearance-none  dark:text-gray-300 ">
             <Button
-              onClick={() => handleUpdateTask(task)}
+              onClick={() => startTransition(() => handleUpdateTask(task))}
               variant={"outline"}
               className={cn(`bg-transparent  border-none hover:bg-transparent`)}
             >
@@ -47,7 +49,7 @@ export default function ListOfActivity({ tasks }: Props) {
             <Button
               variant={"outline"}
               className={cn(`bg-transparent  border-none hover:bg-transparent`)}
-              onClick={() => handleDelete(task._id)}
+              onClick={() => startTransition(() => handleDelete(task))}
             >
               <img src="/images/icon-cross.svg" alt="icon" />
             </Button>

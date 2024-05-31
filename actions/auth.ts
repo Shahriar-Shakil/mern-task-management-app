@@ -1,13 +1,5 @@
-"use server";
-
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { LOGIN_API, REGISTRATION_API } from "@/lib/API";
-import {
-  FormState,
-  LoginFormSchema,
-  SignupFormSchema,
-} from "@/lib/definitions";
+import { LoginFormSchema } from "@/lib/definitions";
 
 export async function loginAction(sate: any, formData: FormData) {
   const email = formData.get("email");
@@ -41,21 +33,21 @@ export async function getAccessToken({
   return responseData;
 }
 
-export async function signUpAction(sate: FormState, formData: any) {
+export async function signUpAction(data: any) {
   //1. Validate form fields
-  const validatedFields = SignupFormSchema.safeParse({
-    username: formData.get("username"),
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
+  // const validatedFields = SignupFormSchema.safeParse({
+  //   username: formData.get("username"),
+  //   email: formData.get("email"),
+  //   password: formData.get("password"),
+  // });
 
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-    };
-  }
+  // if (!validatedFields.success) {
+  //   return {
+  //     errors: validatedFields.error.flatten().fieldErrors,
+  //   };
+  // }
   // 2. Prepare data for insertion into database
-  const { username, email, password } = validatedFields.data;
+  const { username, email, password } = data;
   //3. make a post request to create User
   const response = await fetch(REGISTRATION_API, {
     method: "POST",
@@ -74,7 +66,5 @@ export async function signUpAction(sate: FormState, formData: any) {
         "An error occurred while creating your account.",
     };
   }
-  if (responseData?.email) {
-    await getAccessToken({ email: responseData?.email, password });
-  }
+  return responseData;
 }

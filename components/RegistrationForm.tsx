@@ -1,7 +1,7 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
+import { useForm } from "react-hook-form";
 import { signUpAction } from "@/actions/auth";
 import {
   Card,
@@ -17,49 +17,46 @@ import FormSubmitButton from "./FormSubmitButton";
 import { useToast } from "./ui/use-toast";
 
 export function RegistrationForm() {
-  const [state, action] = useFormState(signUpAction, undefined);
   const { toast } = useToast();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<any>();
 
-  useEffect(() => {
-    if (state?.status === "error") {
-      toast({
-        variant: "destructive",
-        title: state?.message,
+  const onSubmit = async (data: any) => {
+    const result = await signUpAction(data);
+    if (result._id) {
+      signIn("email", {
+        email: data.email,
+        password: data.password,
+        redirect: true,
+        callbackUrl: "/",
       });
     }
-  }, [state, toast]);
+  };
   return (
     <>
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle>Register New Account</CardTitle>
           <CardDescription>Welcome</CardDescription>
-          {state?.status === "error" && (
-            <p className="text-xs text-red-600">{state?.message}</p>
-          )}
         </CardHeader>
         <CardContent>
-          <form action={action}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  name="username"
-                  placeholder="Enter Your username"
-                />
-                {state?.errors?.username && (
-                  <p className="text-xs text-red-600">
-                    {state.errors.username}
-                  </p>
-                )}
+                <Input id="username" {...register("username", { value: "" })} />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" name="email" placeholder="Enter Your Email" />
-                {state?.errors?.email && (
-                  <p className="text-xs text-red-600">{state.errors.email}</p>
-                )}
+                <Input
+                  id="email"
+                  {...register("email")}
+                  placeholder="Enter Your Email"
+                />
               </div>
 
               <div className="flex flex-col space-y-1.5">
@@ -67,17 +64,12 @@ export function RegistrationForm() {
                 <Input
                   id="password"
                   type="password"
-                  name="password"
+                  {...register("password")}
                   placeholder="Enter Your Password"
                 />
-                {state?.errors?.password && (
-                  <p className="text-xs text-red-600">
-                    {state.errors.password}
-                  </p>
-                )}
               </div>
             </div>
-            <FormSubmitButton>SignUp</FormSubmitButton>
+            <FormSubmitButton loading={isSubmitting}>SignUp</FormSubmitButton>
           </form>
         </CardContent>
         <CardFooter className="flex-col divide-y-2 space-y-5 divide-blue-100">

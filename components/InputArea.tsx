@@ -1,22 +1,43 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useFormState } from "react-dom";
+import { startTransition, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createTaskAction } from "@/actions/task";
+import { useTodoContext } from "@/context/TodoContext";
+import { taskSchema } from "@/lib/definitions";
 import { toast } from "./ui/use-toast";
 
 type Props = {};
 
 export default function InputArea({}: Props) {
-  const [state, action] = useFormState(createTaskAction, undefined);
+  const { setOptimisticTodo } = useTodoContext();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<any>({
+    resolver: zodResolver(taskSchema), // Apply the zodResolver
+  });
+  let tempIds = 1;
+  const onSubmit = async (value: any) => {
+    startTransition(() => {
+      setOptimisticTodo({ action: "add", todo: { ...value, _id: tempIds++ } });
+    });
+    await createTaskAction(value.title);
+    reset();
+  };
+
   useEffect(() => {
-    if (state?.errors) {
+    if (errors?.title) {
       toast({
         variant: "destructive",
-        title: state?.errors.title?.[0],
+        title: errors.title.message,
       });
     }
-  }, [state, toast]);
+  }, [errors, toast]);
+
   return (
     <div
       id="#input"
@@ -26,14 +47,17 @@ export default function InputArea({}: Props) {
         <img src="/images/circle.svg" alt="LogoCentang" className="mt-5 mr-6" />
       </div>
 
-      <form action={action} key={state?.resetKey} className="flex-1">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex-1">
         <input
+          {...register("title")}
           className="w-full h-16 border-none input dark:bg-input-dark dark:text-gray-300"
           id="title"
-          name="title"
           type="text"
           placeholder="What to do ?"
         />
+        {/* {errors.title && (
+          <p className="text-red-500">{errors.title?.message || ""}</p>
+        )} */}
       </form>
     </div>
   );
