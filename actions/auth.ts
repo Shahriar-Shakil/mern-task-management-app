@@ -51,6 +51,7 @@ export async function signUpAction(data: any) {
   //3. make a post request to create User
   const response = await fetch(REGISTRATION_API, {
     method: "POST",
+    mode: "no-cors",
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
