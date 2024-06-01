@@ -25,7 +25,7 @@ export default async function Todo({}: Props) {
             <ListOfActivity />
           </CardContent>
           <CardFooter className="flex flex-col py-3">
-            {/* <InformationFilter tasks={tasks} /> */}
+            <InformationFilter />
           </CardFooter>
         </Card>
       </div>

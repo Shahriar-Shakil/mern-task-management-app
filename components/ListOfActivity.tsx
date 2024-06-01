@@ -9,7 +9,7 @@ export default function ListOfActivity() {
   const { optimisticTodos, setOptimisticTodo } = useTodoContext();
   const handleDelete = async (todo: any) => {
     let idToBeDeleted = new Array(todo._id);
-    setOptimisticTodo({ action: "delete", todo });
+    setOptimisticTodo({ action: "delete", todo: idToBeDeleted });
     await deleteTaskAction(idToBeDeleted);
   };
   const handleUpdateTask = async (todo: any) => {

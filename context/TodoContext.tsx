@@ -23,7 +23,7 @@ export default function TodoContextProvider({
         case "add":
           return [todo, ...state];
         case "delete":
-          return state.filter((item: any) => item._id !== todo._id);
+          return state.filter((item: any) => !todo.includes(item._id));
         case "update":
           return state.map((item: any) => {
             if (item._id === todo._id) {

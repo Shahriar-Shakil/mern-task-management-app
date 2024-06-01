@@ -1,24 +1,27 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import { startTransition } from "react";
 import { deleteTaskAction, filterTaskAction } from "@/actions/task";
+import { useTodoContext } from "@/context/TodoContext";
 import { cn } from "@/lib/utils";
 
-type Props = {
-  tasks: any;
-};
+export default function InformationFilter() {
+  const { optimisticTodos, setOptimisticTodo } = useTodoContext();
 
-export default function InformationFilter({ tasks }: Props) {
-  const completedTask = tasks?.length;
+  const completedTask = optimisticTodos?.length;
   const searchParams = useSearchParams();
   const completed = searchParams.get("completed");
   const handleFilter = async (item: any) => {
     await filterTaskAction(item);
   };
   const clearCompletedTaskHandler = async () => {
-    let idsToBeDeleted = tasks
+    let idsToBeDeleted = optimisticTodos
       .filter((task: any) => task.completed)
       .map((task: any) => task._id);
+    startTransition(() => {
+      setOptimisticTodo({ action: "delete", todo: idsToBeDeleted });
+    });
     await deleteTaskAction(idsToBeDeleted);
   };
   return (
