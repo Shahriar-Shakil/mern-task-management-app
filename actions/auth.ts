@@ -52,7 +52,8 @@ export async function signUpAction(data: any) {
   const response = await fetch(REGISTRATION_API, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json", // Assuming you're sending JSON data
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ username, email, password }),
   });
