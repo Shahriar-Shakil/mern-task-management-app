@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task Management App Next js 14
+
+## About
+
+This repository contains the frontend code for a MERN stack application. The frontend is built using Next.js with the app directory structure and utilizes server actions and optimistic UI updates for a seamless user experience. Styling is done using the ShadCN library with Tailwind CSS.
+
+## Live Link
+
+[Frontend Link](https://mern-task-management-app-navy.vercel.app/)
+[Backend Link](https://github.com/Shahriar-Shakil/task-management-backend)
+
+> Login with This Account
+> email: toshahriarshakil@gmail.com
+> password: abc123
+
+## Features
+
+- Next.js with the app directory structure
+- Server actions for enhanced performance
+- Optimistic UI updates for better UX
+- Responsive design with Tailwind CSS
+- Styled using ShadCN
+
+## Technologies
+
+- Next.js (latest version 14)
+- Tailwind CSS (ShadCN)
+- JavaScript/TypeScript
+- Axios or Fetch for API calls
 
 ## Getting Started
 
-First, run the development server:
+These instructions will help you set up the frontend project on your local machine for development and testing purposes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Prerequisites
+
+- Node.js (version 20)
+- npm (version 10) or pnpm (version 9)
+
+### Installation
+
+```sh
+1. Clone the repository:
+
+git clone https://github.com/Shahriar-Shakil/mern-task-management-app.git
+cd mern-task-management-app
+
+2. Install the dependencies:
+
+		    npm install
+		    #or
+		    pnpm add
+
+
+3.  Running the Project:
+
+
+ npm run dev # or pnpm dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variable
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a `.env.local` file in the root directory and add the necessary environment variables:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```
+NEXT_PUBLIC_BASE_URL  //backend  base  url
+NEXTAUTH_SECRET  //  next  auth  secret
+COOKIE_EXPIRATION_DAYS  =  23  #in hours
+```
 
-## Learn More
+### Contribution
 
-To learn more about Next.js, take a look at the following resources:
+Contributions are welcome! Please follow these steps to contribute:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some feature'`)
+5. Push to the branch (`git push origin feature/your-feature`)
+6. Open a pull request
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+If you have any questions or feedback, feel free to reach out to me at toshahriarshakil@gmail.com.
