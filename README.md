@@ -4,6 +4,11 @@
 
 This repository contains the frontend code for a MERN stack application. The frontend is built using Next.js with the app directory structure and utilizes server actions and optimistic UI updates for a seamless user experience. Styling is done using the ShadCN library with Tailwind CSS.
 
+## Demo
+
+  <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/203a0ec9aaf04ea0a2165c213f0f7657?sid=0c490aa1-42b9-42e1-abee-c005b0804d3b" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
+
 ## Live Link
 
 [Frontend Link](https://mern-task-management-app-navy.vercel.app/)
